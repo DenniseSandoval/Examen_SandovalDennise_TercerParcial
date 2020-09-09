@@ -13,9 +13,9 @@ class ProductController {
     }
     public async getOne(req: Request, res: Response): Promise<any> {
         const { id } = req.params;
-        const product = await pool.query('SELECT * FROM subcategoria WHERE codigo = ?', [id]);
+        const product = await pool.query('SELECT * FROM subcategoria WHERE COD_CATEGORIA = ?', [id]);
         if (product.length > 0) {
-            return res.json(product[0]);
+            return res.json(product);
         }
         res.status(404).json({ text: "Producto no registrado" });
     }

@@ -1,4 +1,4 @@
-export class PeticionEnvio {
+export class Subcategoria {
     public COD_SUB_CATEGORIA: String;
     public COD_CATEGORIA: String;
     public NOMBRE: String;

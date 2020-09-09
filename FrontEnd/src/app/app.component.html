@@ -7,26 +7,33 @@
 </div>
 <section>
     <div class="py-4">
-        <form (ngSubmit)="onSubmit(3,idPut1);" #deleteForm="ngForm">
+        <form (ngSubmit)="onSubmit(2);" #deleteForm="ngForm">
+            <div class="form-row py-2">
+                <div class="col-sm-4">
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Categoria</label>
+                </div>
+                <div class="col">
+                    <select class="form-control" #categoria name="categoria" (change)="onchange($event)">
+                        <option hidden selected>Seleccione</option>
+                        <option *ngFor="let resp of resultadoCategoria" [value]="resp.COD_CATEGORIA">
+                            {{ resp.DESCRIPCION }}</option>
+                    </select>
+                </div>
+            </div>
             <div>
                 <table class="table table-bordered">
                     <thead>
                         <th scope="col">Código</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">Fecha Expiración</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">ELIMINAR</th>
-                        <th scope="col">MODIFICAR</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha creación</th>
+                        <th scope="col" colspan="2"></th>
                     </thead>
                     <tbody *ngFor="let resp of resultado ">
                         <tr>
-                            <th scope="row">{{ resp.codigo }}</th>
-                            <td>{{ resp.descripcion }}</td>
-                            <td>{{ resp.categoria }}</td>
-                            <td>{{ (resp.fecha_expiracion).slice(0, -14) }}</td>
-                            <td>{{ resp.precio }}</td>
-                            <td><button #idPut1 value="{{ resp.codigo }}" (click)="onclick($event)"
+                            <th scope="row">{{ resp.COD_SUB_CATEGORIA }}</th>
+                            <td>{{ resp.NOMBRE }}</td>
+                            <td>{{ resp.FECHA_CREACION }}</td>
+                            <td><button #idPut1 value="{{ resp.COD_SUB_CATEGORIA }}" (click)="onclick($event)"
                                     class="btn btn-danger btn-sm">
                                     <span class="far fa-trash-alt fa-lg" aria-hidden="true"></span></button></td>
                             <td><button #idPut2 (click)="update(resp)" class="btn btn-info btn-sm">
@@ -45,46 +52,40 @@
                 <h3 align="center">REGISTRO</h3>
                 <div class="form-row py-2">
                     <div class="col-sm-4">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Cod Subcategoria</label>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="text" placeholder="cod_sub_categoria" #cod_sub_categoria
+                            name="cod_sub_categoria" [(ngModel)]="peticion.COD_SUB_CATEGORIA" required />
+                    </div>
+                </div>
+                <div class="form-row py-2">
+                    <div class="col-sm-4">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="text" placeholder="Descripción" #descripcion
-                            name="descripcion" [(ngModel)]="peticion.descripcion" required />
+                        <input class="form-control" type="text" placeholder="Descripción" #nombre name="nombre"
+                            [(ngModel)]="peticion.NOMBRE" required />
                     </div>
                 </div>
                 <div class="form-row py-2">
                     <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Categoria</label>
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Descripcion</label>
                     </div>
                     <div class="col">
-                        <select class="form-control" #categoria name="categoria" [(ngModel)]="peticion.categoria"
-                            required>
-                            <option value="Legumbres">Legumbres</option>
-                            <option value="Lácteos">Lácteos</option>
-                            <option value="Carnes">Carnes</option>
-                            <option value="Frutas">Frutas</option>
-                            <option value="Bebidas">Bebidas</option>
-                        </select>
+                        <input class="form-control" type="text" placeholder="descripcion" #descripcion
+                            name="descripcion" [(ngModel)]="peticion.DESCRIPCION" required />
                     </div>
                 </div>
                 <div class="form-row py-2">
                     <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-4 col-form-label">Fecha Expiración</label>
+                        <label for="staticEmail" class="col-sm-4 col-form-label">Fecha Creaciónn</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="date" placeholder="Fecha expiracion" #fecha_expiracion
-                            name="fecha_expiracion" [(ngModel)]="peticion.fecha_expiracion" required />
+                        <input class="form-control" type="date" placeholder="fecha_creacion" #fecha_creacion
+                            name="fecha_creacion" [(ngModel)]="peticion.FECHA_CREACION" required />
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Precio</label>
-                    </div>
-                    <div class="col">
-                        <input class="form-control" type="number" min="0" step="any" placeholder="Precio" #precio
-                            name="precio" [(ngModel)]="peticion.precio" required />
-                    </div>
-                </div><br><br>
                 <div class="form-row" style="justify-content: center;">
                     <div class="col-sm-4">
                         <button type="reset" class="btn btn-primary btn-user btn-block">Limpiar</button>
@@ -99,64 +100,42 @@
     <div class="mitad">
         <div class="peticiones">
             <form (ngSubmit)="onSubmit(2,idPut)" #putForm="ngForm">
-                <h3 align="center">MODIFICAR</h3>
+                <h3 align="center">DETALLE</h3>
                 <div class="form-row">
                     <div class="col-sm-4">
                         <label for="staticEmail" class="col-sm-4 col-form-label">Código</label>
                     </div>
                     <div class="col">
                         <input class="form-control" type="number" disabled placeholder="codigo" #idPut
-                            [(ngModel)]="peticionPut.codigo" name="idPut" min="1" required />
+                            [(ngModel)]="peticionPut.COD_CATEGORIA" name="idPut" min="1" required />
                     </div>
                 </div>
+
                 <div class="form-row py-2">
                     <div class="col-sm-4">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="text" placeholder="Descripción" #descripcion1
-                            name="descripcion1" [(ngModel)]="peticionPut.descripcion" required />
+                        <input class="form-control" type="text" placeholder="Nombre" #nombre name="nombre"
+                            [(ngModel)]="peticionPut.NOMBRE" required />
                     </div>
                 </div>
                 <div class="form-row py-2">
                     <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Categoria</label>
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Descripcion</label>
                     </div>
                     <div class="col">
-                        <select class="form-control" #categoria1 name="categoria1" [(ngModel)]="peticionPut.categoria"
-                            required>
-                            <option value="Legumbres">Legumbres</option>
-                            <option value="Lácteos">Lácteos</option>
-                            <option value="Carnes">Carnes</option>
-                            <option value="Frutas">Frutas</option>
-                            <option value="Bebidas">Bebidas</option>
-                        </select>
+                        <input class="form-control" type="text" placeholder="Nombre" #descripcion1 name="descripcion1"
+                            [(ngModel)]="peticionPut.DESCRIPCION" required />
                     </div>
                 </div>
                 <div class="form-row py-2">
                     <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-8 col-form-label">Fecha Expiración</label>
+                        <label for="staticEmail" class="col-sm-8 col-form-label">Fecha Creación</label>
                     </div>
                     <div class="col">
                         <input class="form-control" type="date" placeholder="Fecha expiracion" #fecha_expiracion1
-                            name="fecha_expiracion1" [(ngModel)]="peticionPut.fecha_expiracion" required />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-4">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Precio</label>
-                    </div>
-                    <div class="col">
-                        <input class="form-control" type="number" min="0" step="any" placeholder="Precio" #precio1
-                            name="precio1" [(ngModel)]="peticionPut.precio" required />
-                    </div>
-                </div><br>
-                <div class="form-row" style="justify-content: center;">
-                    <div class="col-sm-4">
-                        <button type="reset" class="btn btn-primary btn-user btn-block">Limpiar</button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button class="btn btn-primary btn-user btn-block">Modificar</button>
+                            name="fecha_expiracion1" [(ngModel)]="peticionPut.FECHA_CREACION" required />
                     </div>
                 </div>
             </form>

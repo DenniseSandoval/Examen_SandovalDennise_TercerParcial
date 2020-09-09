@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ResponseG } from './Model/responseG';
+import { Subcategoria } from './Model/subcategoria';
+import { Categoria } from './Model/categoria';
 import { PeticionEnvio } from './Model/peticionEnvio';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
@@ -7,29 +8,26 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PhttpService {
-  private url: string = "http://localhost:4000/api/product";
-  private ArrayG: Array<ResponseG>;
+  private url: string = "http://localhost:4000/api";
+  private ArrayG: Array<Subcategoria>;
   constructor(private http: HttpClient) { }
 
-  postRespuesta(_body: PeticionEnvio): Observable<ResponseG> {
-
-    return this.http.post<ResponseG>(this.url, _body);
+  postRespuesta(_body: PeticionEnvio): Observable<Subcategoria> {
+    return this.http.post<Subcategoria>(this.url, _body);
   }
-  getRespuesta(): Observable<ResponseG[]> {
-    return this.http.get<ResponseG[]>(this.url + "/");
-  }
-  getProduct(codigo: number): Observable<ResponseG[]> {
-    return this.http.get<ResponseG[]>(this.url + '/' + codigo);
-  }
-  putRespuesta(_id: number, _body: PeticionEnvio): Observable<ResponseG> {
+  getRespuesta(_id: String): Observable<Subcategoria[]> {
     let urlcom = this.url + "/" + _id;
-    return this.http.put<ResponseG>(urlcom, _body);
+    return this.http.get<Subcategoria[]>(urlcom);
   }
-  /*putRespuesta(id: number, updatedBody: PeticionEnvio): Observable<any> {
-    return this.http.put(`${this.url}/${id}`, updatedBody);
-  }*/
-  deleteRespuesta(_id: number): Observable<ResponseG> {
+  getCategory(): Observable<Categoria[]> {
+    return this.http.get<Categoria[]>(this.url + "/category/");
+  }
+  putRespuesta(_id: number, _body: PeticionEnvio): Observable<Subcategoria> {
     let urlcom = this.url + "/" + _id;
-    return this.http.delete<ResponseG>(urlcom);
+    return this.http.put<Subcategoria>(urlcom, _body);
+  }
+  deleteRespuesta(_id: String): Observable<Subcategoria> {
+    let urlcom = this.url + "/" + _id;
+    return this.http.delete<Subcategoria>(urlcom);
   }
 }
