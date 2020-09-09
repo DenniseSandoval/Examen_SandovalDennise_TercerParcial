@@ -9,6 +9,7 @@ class ProductRouter {
     }
     config() {
         this.router.get('/', productsControlers_1.procuctController.getAll);
+        this.router.get('/category/', productsControlers_1.procuctController.getAllCategory);
         this.router.get('/:id', productsControlers_1.procuctController.getOne);
         this.router.post('/', productsControlers_1.procuctController.create);
         this.router.put('/:id', productsControlers_1.procuctController.update);

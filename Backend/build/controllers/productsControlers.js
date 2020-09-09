@@ -17,14 +17,20 @@ const database_1 = __importDefault(require("../database"));
 class ProductController {
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workers = yield database_1.default.query('SELECT * FROM producto');
+            const workers = yield database_1.default.query('SELECT * FROM subcategoria');
+            res.json(workers);
+        });
+    }
+    getAllCategory(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const workers = yield database_1.default.query('SELECT * FROM categoria');
             res.json(workers);
         });
     }
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const product = yield database_1.default.query('SELECT * FROM producto WHERE codigo = ?', [id]);
+            const product = yield database_1.default.query('SELECT * FROM subcategoria WHERE codigo = ?', [id]);
             if (product.length > 0) {
                 return res.json(product[0]);
             }
@@ -33,7 +39,7 @@ class ProductController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield database_1.default.query('INSERT INTO producto set ?', [req.body]);
+            const result = yield database_1.default.query('INSERT INTO subcategoria set ?', [req.body]);
             res.json(result);
         });
     }
@@ -41,14 +47,14 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const product = req.body;
-            const result = yield database_1.default.query('UPDATE producto set ? WHERE codigo = ?', [product, id]);
+            const result = yield database_1.default.query('UPDATE subcategoria set ? WHERE codigo = ?', [product, id]);
             res.json(result);
         });
     }
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const result = yield database_1.default.query('DELETE FROM producto  WHERE codigo = ?', [id]);
+            const result = yield database_1.default.query('DELETE FROM subcategoria  WHERE COD_SUB_CATEGORIA = ?', [id]);
             res.json(result);
         });
     }

@@ -21,7 +21,7 @@ class Server {
         this.app.use(express.urlencoded({ extended: false }));
     }
     routes(): void {
-        this.app.use('/api/product', productRouter);
+        this.app.use('/api', productRouter);
     }
 
     start() {

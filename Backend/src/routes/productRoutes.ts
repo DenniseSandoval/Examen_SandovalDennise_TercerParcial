@@ -1,17 +1,18 @@
-import {Router} from 'express';
-import {procuctController} from '../controllers/productsControlers';
+import { Router } from 'express';
+import { procuctController } from '../controllers/productsControlers';
 
 
 class ProductRouter {
-    public router: Router=Router();
+    public router: Router = Router();
 
-    constructor(){
+    constructor() {
         this.config();
 
     }
-    
+
     config(): void {
         this.router.get('/', procuctController.getAll);
+        this.router.get('/category/', procuctController.getAllCategory);
         this.router.get('/:id', procuctController.getOne);
         this.router.post('/', procuctController.create);
         this.router.put('/:id', procuctController.update);
@@ -19,5 +20,5 @@ class ProductRouter {
     }
 }
 
-const productRouter= new ProductRouter();
+const productRouter = new ProductRouter();
 export default productRouter.router;
